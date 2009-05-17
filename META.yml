@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               DBIx-Class-ResultSet-Atomic
-version:            0.001
+version:            0.002
 abstract:           Atomic alternative to update_or_create()
 author:
     - Peter Corlett <abuse@cabal.org.uk>

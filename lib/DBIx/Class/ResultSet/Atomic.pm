@@ -14,7 +14,7 @@ DBIx::Class::ResultSet::Atomic - Atomic alternative to update_or_create()
 
 =cut
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 =head1 SYNOPSIS
 
@@ -26,6 +26,15 @@ our $VERSION = '0.001';
      column1 => 'value',
      ...
  });
+
+ # or if you're using DBIx::Class::Schema::Loader...:
+
+ __PACKAGE__->loader_options(
+   # ...
+   # have separate Result and ResultSet schemas
+   use_namespaces => 1,
+   # use this plugin
+   resultset_components => [ '+DBIx::Class::ResultSet::Atomic' ],
 
 DESCRIPTION
 
@@ -86,11 +95,18 @@ sub atomic_update_or_create {
          # SELECT-modify-UPDATE instead. We add the SELECT ... FOR UPDATE
          # option to block any parallel queries on the same row.
          $schema->svp_rollback;
-         $row = $self->find($cond, { %$attrs, for => 'update'} )
-           or croak "Atomic update_or_create failed";
+         # The insert failed, so we search for the row that caused the
+         # failure. If there are zero or more than two matches, there's
+         # clearly something not quite right going on
+         my $rs = $self->search($cond, { %$attrs, for => 'update'} );
+         my $row = $rs->next
+           or croak "Atomic update_or_create failed: query didn't return a row";
+         $rs->next
+           and croak "Atomic update_or_create failed: query returned more than one row";
          $row->update($cond);
        }
        $schema->svp_release;
+       return $row;
      }); # txn_do
 }
 

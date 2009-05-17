@@ -7,7 +7,9 @@ README
 t/00.load.t
 t/10.createtable.t
 t/11.adds_role.t
-t/12.fork.t
+t/12.return_ok.t
+t/13.fork.t
+t/14.null_insert.t
 t/19.droptable.t
 t/90.pod.t
 t/90.pod_coverage.t

@@ -1,5 +1,18 @@
 Revision history for DBIx-Class-Atomic
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+0.002
+
+Documentation improvements.
+
+Fixed dumb bug where it didn't actually return a row from
+atomic_update_or_create.
+
+Added an extra guard in atomic_update_or_create to detect where the DBIC
+schema doesn't correspond to the database schema, and croak if so.
+
+(TODO: add more extensive testing to break this guard.)
+
+0.001
+
+Initial release.
 

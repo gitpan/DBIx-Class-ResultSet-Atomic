@@ -8,7 +8,7 @@ __PACKAGE__->load_components(qw/ ResultSet::Atomic /);
 
 =head1 NAME
 
-DBIx::Class::ResultSet::Atomic::Default - Helper class for D::C::RS::Atomic
+DBIx::Class::ResultSet::Atomic::Default - Helper class for DBIx::Class::ResultSet::Atomic
 
 =cut
 
