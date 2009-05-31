@@ -38,6 +38,6 @@ eval {
      });
 };
 
-like($@, qr/^Atomic update_or_create failed: query returned more than one row/,
+like($@, qr/Atomic update_or_create failed/,
      "Throws sensible exception if given oddball query");
 

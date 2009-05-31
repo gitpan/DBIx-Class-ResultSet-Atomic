@@ -14,7 +14,7 @@ DBIx::Class::ResultSet::Atomic - Atomic alternative to update_or_create()
 
 =cut
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 =head1 SYNOPSIS
 
@@ -83,7 +83,7 @@ sub atomic_update_or_create {
   # underlying storage doesn't support savepoints. This is still safe even
   # if a transaction is already in progress - the savepoint ensures that the
   # outer transaction isn't aborted unless there is a real failure.
-  $schema->txn_do
+  return $schema->txn_do
     (sub {
        $schema->svp_begin;
 
@@ -99,7 +99,7 @@ sub atomic_update_or_create {
          # failure. If there are zero or more than two matches, there's
          # clearly something not quite right going on
          my $rs = $self->search($cond, { %$attrs, for => 'update'} );
-         my $row = $rs->next
+         $row = $rs->next
            or croak "Atomic update_or_create failed: query didn't return a row";
          $rs->next
            and croak "Atomic update_or_create failed: query returned more than one row";

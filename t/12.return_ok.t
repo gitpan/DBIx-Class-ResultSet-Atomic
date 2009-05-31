@@ -27,13 +27,11 @@ my $result = $rs->atomic_update_or_create
   ({
     foo => 'a random value too',
    });
-
-can_ok($result, 'foo', "we've got a row back");
+isa_ok($result, 'TestDB::Result::Test', "INSERT returns row");
 
 $result = $rs->atomic_update_or_create
   ({
     foo => 'a random value too',
    });
-
-can_ok($result, 'foo', "we've got a row back");
+isa_ok($result, 'TestDB::Result::Test', "UPDATE returns row");
 

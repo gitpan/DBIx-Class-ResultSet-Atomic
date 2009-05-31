@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                DBIx-Class-ResultSet-Atomic
-version:             0.003
+version:             0.004
 abstract:            Atomic alternative to update_or_create()
 license:             perl
 author:              
