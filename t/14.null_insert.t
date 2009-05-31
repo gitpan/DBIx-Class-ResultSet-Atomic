@@ -15,7 +15,7 @@ Set $ENV{DBICTEST_PG_DSN}, _USER and _PASS to run this test.
 and indices!)
 EOT
 
-plan tests => 2;
+plan tests => 1;
 
 my $schema = TestDB->connect($dsn, $user, $pass)
   or die "TestDB->connect failed";
@@ -36,7 +36,7 @@ eval {
   my $result = $rs->atomic_update_or_create
     ({
      });
-}
+};
 
 like($@, qr/^Atomic update_or_create failed: query returned more than one row/,
      "Throws sensible exception if given oddball query");

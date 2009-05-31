@@ -1,23 +1,15 @@
 --- #YAML:1.0
-name:               DBIx-Class-ResultSet-Atomic
-version:            0.002
-abstract:           Atomic alternative to update_or_create()
-author:
+name:                DBIx-Class-ResultSet-Atomic
+version:             0.003
+abstract:            Atomic alternative to update_or_create()
+license:             perl
+author:              
     - Peter Corlett <abuse@cabal.org.uk>
-license:            perl
-distribution_type:  module
-configure_requires:
-    ExtUtils::MakeMaker:  0
-build_requires:
-    ExtUtils::MakeMaker:  0
-requires:
-    DBIx::Class:  0.081
-    Test::More:   0
-no_index:
-    directory:
-        - t
-        - inc
-generated_by:       ExtUtils::MakeMaker version 6.50
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    DBIx::Class:                   0.081
+    Test::More:                    0
 meta-spec:
-    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  1.4
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

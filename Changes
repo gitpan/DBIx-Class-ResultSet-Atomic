@@ -12,6 +12,9 @@ schema doesn't correspond to the database schema, and croak if so.
 
 (TODO: add more extensive testing to break this guard.)
 
+(TODO: add sane error-reporting when INSERT fails for some other reason than
+a duplicate key.)
+
 0.001
 
 Initial release.

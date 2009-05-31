@@ -14,7 +14,7 @@ DBIx::Class::ResultSet::Atomic - Atomic alternative to update_or_create()
 
 =cut
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 =head1 SYNOPSIS
 
