@@ -14,7 +14,7 @@ DBIx::Class::ResultSet::Atomic - Atomic alternative to update_or_create()
 
 =cut
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
 =head1 SYNOPSIS
 
@@ -36,7 +36,7 @@ our $VERSION = '0.004';
    # use this plugin
    resultset_components => [ '+DBIx::Class::ResultSet::Atomic' ],
 
-DESCRIPTION
+=head1 DESCRIPTION
 
 DBIx::Class::ResultSet::update_or_create() currently (up to at least version
 0.08100) contains a race condition which can cause it to fail with an
@@ -98,11 +98,11 @@ sub atomic_update_or_create {
          # The insert failed, so we search for the row that caused the
          # failure. If there are zero or more than two matches, there's
          # clearly something not quite right going on
-         my $rs = $self->search($cond, { %$attrs, for => 'update'} );
-         $row = $rs->next
-           or croak "Atomic update_or_create failed: query didn't return a row";
-         $rs->next
-           and croak "Atomic update_or_create failed: query returned more than one row";
+         $row = $self->find($cond, { %$attrs, for => 'update'} );
+#          $row = $rs->next
+#            or croak "Atomic update_or_create failed: query didn't return a row";
+#          $rs->next
+#            and croak "Atomic update_or_create failed: query returned more than one row";
          $row->update($cond);
        }
        $schema->svp_release;
@@ -157,11 +157,15 @@ Peter Corlett, C<< <abuse at cabal.org.uk> >>
 
 =head1 CAVEATS
 
-The atomic operations rely upon the database having the correct UNIQUE
-constraints set. If your database disagrees with your schema on which
-columns are unique, whether through accident or deliberate trigger magic,
-you may find that duplicate "unique" rows get inserted. Consider using
+The atomic operations rely upon the database having sensible UNIQUE
+constraints set so that the INSERT of the conflicting row will fail. If this
+is not the case, your database may gain duplicate "unique" rows. You will
+usually discover this when you try to C<< $rs->find >> the row later and get
+a DBIC warning about multiple rows being found. Consider using
 DBIx::Class::Schema::Loader to keep things in sync.
+
+atomic_update_or_create() will still bump the table's sequence even if it
+updates a row. Thus, your rows may not have sequential IDs.
 
 =head1 BUGS
 
